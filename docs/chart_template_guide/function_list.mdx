@@ -15,6 +15,7 @@ They are listed here and broken down by the following categories:
 * [Date](#date-functions)
 * [Dictionaries](#dictionaries-and-dict-functions)
 * [Encoding](#encoding-functions)
+* [Gzip](#gzip-functions)
 * [File Path](#file-path-functions)
 * [Kubernetes and Chart](#kubernetes-and-chart-functions)
 * [Logic and Flow Control](#logic-and-flow-control-functions)
@@ -1607,6 +1608,34 @@ Helm has the following encoding and decoding functions:
 
 - `b64enc`/`b64dec`: Encode or decode with Base64
 - `b32enc`/`b32dec`: Encode or decode with Base32
+
+## Gzip Functions
+
+Helm has the following gzip compression and decompression functions:
+
+- `gzip`: Compress a string with gzip and return as a Base64 encoded string
+- `ungzip`: Decode a Base64 encoded string and decompress with gzip
+
+### gzip
+
+The `gzip` function compresses a string using gzip and returns a Base64 encoded result.
+
+```
+gzip "Hello world!"
+```
+
+It enforces a size limit of 1MB on the output to prevent creating objects too large for Kubernetes Secrets/ConfigMap.
+
+### ungzip
+
+The `ungzip` function decodes a Base64 encoded string and then decompresses it using gzip.
+
+```
+"H4sIAAAAAAAA/8pIzcnJVyjPL8pJAQQAAP//hRFKDQsAAAA=" | ungzip
+```
+
+It enforces a size limit of 1MB on both the input string and the decompressed output. It also verifies that the decompressed content is valid UTF-8 text to prevent non-textual data from being obfuscated.
+
 
 ## Lists and List Functions
 
